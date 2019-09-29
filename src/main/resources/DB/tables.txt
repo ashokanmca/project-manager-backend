@@ -1,79 +1,73 @@
 
-CREATE TABLE public."role" (
+CREATE TABLE fsd_project_manager.role (
 	role_id int4 NOT NULL,
-	"role" varchar(255) NULL,
+	role varchar(255) NULL,
 	CONSTRAINT role_pkey PRIMARY KEY (role_id)
 );
 
-
-CREATE TABLE public.user_role (
+CREATE TABLE fsd_project_manager.user_role (
 	user_id int4 NOT NULL,
 	role_id int4 NOT NULL,
 	CONSTRAINT user_role_pkey PRIMARY KEY (user_id, role_id),
 	CONSTRAINT role_fkey FOREIGN KEY (role_id) REFERENCES role(role_id)
 );
 
-CREATE TABLE public.parent_task_table (
-	parent_id bigserial NOT NULL,
+CREATE TABLE fsd_project_manager.parent_task_table (
+	parent_id int4 NOT NULL,
 	parent_task varchar(255) NULL,
 	CONSTRAINT parent_task_table_pkey PRIMARY KEY (parent_id)
 );
 
-CREATE TABLE public.users_table (
-	user_id bigserial NOT NULL,
+CREATE TABLE fsd_project_manager.users_table (
+	user_id int4 NOT NULL,
 	employee_id varchar(255) NULL,
 	first_name varchar(255) NULL,
 	last_name varchar(255) NULL,
 	CONSTRAINT users_table_pkey PRIMARY KEY (user_id)
 );
 
-CREATE TABLE public.subject_table (
-	subjectid bigserial NOT NULL,
+CREATE TABLE fsd_project_manager.subject_table (
+	subjectid int4 NOT NULL,
 	durationinhours int4 NULL,
 	subtitle varchar(255) NULL,
 	CONSTRAINT subject_table_pkey PRIMARY KEY (subjectid)
 );
 
-
-CREATE TABLE public.book_table (
-	bookid bigserial NOT NULL,
+CREATE TABLE fsd_project_manager.book_table (
+	bookid int4 NOT NULL,
 	price float8 NULL,
 	publishdate date NULL,
 	title varchar(255) NULL,
 	volume int4 NULL,
-	subjectid int8 NULL,
+	subjectid int4 NULL,
 	CONSTRAINT book_table_pkey PRIMARY KEY (bookid),
-	CONSTRAINT subject_table_fkey FOREIGN KEY (subjectid) REFERENCES subject_table(subjectid)
+	CONSTRAINT subject_table_fkey1 FOREIGN KEY (subjectid) REFERENCES subject_table(subjectid)
 );
 
-CREATE TABLE public.project_table (
-	project_id bigserial NOT NULL,
+CREATE TABLE fsd_project_manager.project_table (
+	project_id int4 NOT NULL,
 	end_date date NULL,
 	priority int4 NULL,
 	project varchar(255) NULL,
 	start_date date NULL,
-	user_id int8 NULL,
+	user_id int4 NULL,
 	CONSTRAINT project_table_pkey PRIMARY KEY (project_id),
 	CONSTRAINT users_table_fkey FOREIGN KEY (user_id) REFERENCES users_table(user_id)
 );
 
-CREATE TABLE public.task_table (
-	task_id bigserial NOT NULL,
+CREATE TABLE fsd_project_manager.task_table (
+	task_id int4 NOT NULL,
 	end_date date NULL,
 	priority int4 NULL,
 	start_date date NULL,
 	task varchar(255) NULL,
-	parent_id int8 NULL,
-	project_id int8 NULL,
-	user_id int8 NULL,
-	CONSTRAINT task_table_pkey PRIMARY KEY (task_id),
+	parent_id int4 NULL,
+	project_id int4 NULL,
+	user_id int4 NULL,
+	CONSTRAINT task_table_pkey1 PRIMARY KEY (task_id),
 	CONSTRAINT project_table_fkey1 FOREIGN KEY (project_id) REFERENCES project_table(project_id),
 	CONSTRAINT users_table_fkey1 FOREIGN KEY (user_id) REFERENCES users_table(user_id),
 	CONSTRAINT parent_task_table_fkey1 FOREIGN KEY (parent_id) REFERENCES parent_task_table(parent_id)
 );
 
-
-
-
-
-
+commit;
